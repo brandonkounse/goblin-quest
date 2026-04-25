@@ -1,0 +1,27 @@
+#include <iostream>
+#include <windows.h>
+#include "hero.h"
+#include "terminal.h"
+#include "level1.h"
+
+void enableColors() {
+#ifdef _WIN32
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    GetConsoleMode(hOut, &dwMode);
+    SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+#endif
+}
+
+int main() {
+    // If Windows OS is detected enableColors will run for a colored terminal environment.
+    enableColors();
+
+    // Temporary home until this gets refactored.
+    Hero* hero = new Hero(Difficulty::NORMAL);
+    hero->setName();
+    Level level = createLevel1();
+    hud(*hero);
+    displayLevel(level);
+    delete hero;
+}
