@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EventLoop.cpp" />
     <ClCompile Include="GoblinQuest.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Difficulty.h" />
+    <ClInclude Include="EventLoop.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="Level1.h" />

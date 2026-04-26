@@ -3,6 +3,7 @@
 #include "hero.h"
 #include "terminal.h"
 #include "level1.h"
+#include "eventloop.h"
 
 void enableColors() {
 #ifdef _WIN32
@@ -18,6 +19,7 @@ int main() {
     enableColors();
 
     // Temporary home until this gets refactored.
+    play();
     Hero* hero = new Hero(Difficulty::NORMAL);
     hero->setName();
     Level level = createLevel1();
