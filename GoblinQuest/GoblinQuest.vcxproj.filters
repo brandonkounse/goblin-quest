@@ -45,6 +45,9 @@
     <ClCompile Include="EventLoop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Level2.cpp">
+      <Filter>Source Files\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Terminal.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="EventLoop.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level2.h">
+      <Filter>Source Files\Levels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

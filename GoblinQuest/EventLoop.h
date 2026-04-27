@@ -1,9 +1,8 @@
 #pragma once
-#include <iostream>
 #include "terminal.h"
 #include "hero.h"
-#include "level1.h"
 
 void play();
-
+bool playLevel(Level& level, Hero& hero);
 Difficulty selectDifficulty();
+Hero createHero(Difficulty difficulty);

@@ -1,8 +1,7 @@
 #include <iostream>
 #include <windows.h>
-#include "hero.h"
-#include "terminal.h"
-#include "level1.h"
+//#include "hero.h"
+//#include "terminal.h"
 #include "eventloop.h"
 
 void enableColors() {
@@ -20,10 +19,4 @@ int main() {
 
     // Temporary home until this gets refactored.
     play();
-    Hero* hero = new Hero(Difficulty::NORMAL);
-    hero->setName();
-    Level level = createLevel1();
-    hud(*hero);
-    displayLevel(level);
-    delete hero;
 }

@@ -14,7 +14,7 @@ std::string narrateDanger(std::string text) {
     return RED + text + RESET;
 }
 
-void hud(Hero& hero) {
+void displayHud(Hero& hero) {
     std::cout << "NAME: " << hero.stats.name
         << " | HP: " << hero.stats.health
         << std::endl;
