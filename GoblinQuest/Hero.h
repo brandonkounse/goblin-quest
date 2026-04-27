@@ -9,4 +9,6 @@ public:
     Hero(Difficulty setting);
     ~Hero();
     void setName();
+    int attack() const;
+    void takeDamage(int attack);
 };

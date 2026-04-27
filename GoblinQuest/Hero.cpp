@@ -24,3 +24,11 @@ void Hero::setName() {
     std::cin >> stats.name;
     std::cout << narrate("Greetings " + stats.name) << std::endl;
 }
+
+int Hero::attack() const {
+    return stats.attack;
+}
+
+void Hero::takeDamage(int attack) {
+    stats.health -= attack;
+}
