@@ -1,12 +1,9 @@
 #pragma once
-#include "hero.h"
-#include "level.h"
+#include <string>
 
 extern const char* const GREEN;
 extern const char* const RED;
 extern const char* const RESET;
 
-std::string narrate(std::string text);
-std::string narrateDanger(std::string text);
-void displayHud(Hero& hero);
-void displayLevel(Level& level);
+std::string green(std::string text);
+std::string red(std::string text);

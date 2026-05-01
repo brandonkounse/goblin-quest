@@ -4,25 +4,30 @@
 
 Hero::Hero(Difficulty setting) {
     if (setting == EASY) {
-        stats.health = 150;
+        this->maxHP = 150;
+        stats.health = maxHP;
         stats.attack = 20;
+        this->potions = 3;
     }
     else if (setting == NORMAL) {
-        stats.health = 100;
+        this->maxHP = 100;
+        stats.health = maxHP;
         stats.attack = 15;
+        this->potions = 2;
     }
     else {
-        stats.health = 45;
+        this->maxHP = 70;
+        stats.health = maxHP;
         stats.attack = 10;
+        this->potions = 1;
     }
 }
 
 Hero::~Hero() {}
 
 void Hero::setName() {
-    std::cout << narrate("Enter your Hero's name...") << std::endl;
+    std::cout << green("Enter your Hero's name: ");
     std::cin >> stats.name;
-    std::cout << narrate("Greetings " + stats.name) << std::endl;
 }
 
 int Hero::attack() const {
@@ -31,4 +36,35 @@ int Hero::attack() const {
 
 void Hero::takeDamage(int attack) {
     stats.health -= attack;
+}
+
+int Hero::getPotions() const {
+    return this->potions;
+}
+
+int Hero::usePotion() {
+    if (this->potions <= 0) {
+        std::cout << red("No potions remaining!") << std::endl;
+        return 0;
+    }
+    if (this->potions > 0) {
+        if (this->stats.health == maxHP) {
+            std::cout << "Can't heal. Already have full HP" << std::endl;
+            return 0;
+        }
+        else if (this->stats.health < maxHP && this->stats.health > 0) {
+            int amountHealed;
+            if (this->stats.health + potionRestore > maxHP) {
+                amountHealed = maxHP - this->stats.health;
+                this->stats.health = maxHP;
+                this->potions -= 1;
+                return amountHealed;
+            }
+            else {
+                this->stats.health += potionRestore;
+                this->potions -= 1;
+                return potionRestore;
+            }
+        }
+    }
 }

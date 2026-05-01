@@ -4,7 +4,7 @@
 //#include "terminal.h"
 #include "eventloop.h"
 
-void enableColors() {
+static void enableColors() {
 #ifdef _WIN32
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD dwMode = 0;
