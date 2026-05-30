@@ -1,17 +1,17 @@
 #include "monster.h"
 
-Monster::Monster(std::string name, int health, int attack) {
+Monster::Monster(const std::string &name, const int health, const int attack) {
     stats.name = name;
     stats.health = health;
     stats.attack = attack;
 }
 
-Monster::~Monster() {}
+Monster::~Monster() = default;
 
 int Monster::attack() const {
     return stats.attack;
 }
 
-void Monster::takeDamage(int attack) {
+void Monster::takeDamage(const int attack) {
     stats.health -= attack;
 }

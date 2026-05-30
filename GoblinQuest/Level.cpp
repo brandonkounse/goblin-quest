@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "level.h"
 
-Level::Level(Troop troops, int levelNum) {
+Level::Level(const Troop &troops, const int levelNum) {
 	this->troops = troops;
 	this->levelNum = levelNum;
 }
@@ -16,6 +16,6 @@ bool Level::isCleared() {
 	});
 }
 
-int Level::getLevelNum() {
+int Level::getLevelNum() const {
 	return this->levelNum;
 }

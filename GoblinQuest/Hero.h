@@ -6,7 +6,8 @@
 class Hero {
 public:
     Stats stats;
-    Hero(Difficulty setting);
+
+    explicit Hero(Difficulty setting);
     ~Hero();
     int getPotions() const;
     int usePotion();
@@ -16,5 +17,5 @@ public:
 private:
     int potions;
     int maxHP;
-    static const int potionRestore = 30;
+    static constexpr int potionRestore = 30;
 };

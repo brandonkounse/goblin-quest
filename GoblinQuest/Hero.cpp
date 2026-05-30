@@ -2,7 +2,7 @@
 #include "hero.h"
 #include "terminal.h"
 
-Hero::Hero(Difficulty setting) {
+Hero::Hero(const Difficulty setting) {
     if (setting == EASY) {
         this->maxHP = 150;
         stats.health = maxHP;
@@ -23,7 +23,7 @@ Hero::Hero(Difficulty setting) {
     }
 }
 
-Hero::~Hero() {}
+Hero::~Hero() = default;
 
 void Hero::setName() {
     std::cout << green("Enter your Hero's name: ");
@@ -53,9 +53,8 @@ int Hero::usePotion() {
             return 0;
         }
         else if (this->stats.health < maxHP && this->stats.health > 0) {
-            int amountHealed;
             if (this->stats.health + potionRestore > maxHP) {
-                amountHealed = maxHP - this->stats.health;
+                const int amountHealed = maxHP - this->stats.health;
                 this->stats.health = maxHP;
                 this->potions -= 1;
                 return amountHealed;
@@ -67,4 +66,5 @@ int Hero::usePotion() {
             }
         }
     }
+    return 0;
 }

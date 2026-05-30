@@ -5,5 +5,5 @@ extern const char* const GREEN;
 extern const char* const RED;
 extern const char* const RESET;
 
-std::string green(std::string text);
-std::string red(std::string text);
+std::string green(const std::string& text);
+std::string red(const std::string &text);

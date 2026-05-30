@@ -7,5 +7,5 @@ struct Stats {
     int attack = 0;
 
     bool isAlive() const { return health > 0; }
-    void takeDamage(int damage) { health -= damage; }
+    void takeDamage(const int damage) { health -= damage; }
 };

@@ -13,7 +13,7 @@ bool isLevel2Completed;
 
 void play() {
 	displayBanner();
-	Difficulty difficulty = selectDifficulty();
+	const Difficulty difficulty = selectDifficulty();
 	Hero hero = createHero(difficulty);
 	while (true) {
 		if (!isLevel1Completed) {
@@ -67,14 +67,14 @@ void chooseAction(Level& level, Hero& hero) {
 		return;
 	}
 
-	int target = std::stoi(action);
+	const int target = std::stoi(action);
 
-	if (target < 1 || target > (int)troops.size()) {
+	if (target < 1 || target > static_cast<int>(troops.size())) {
 		std::cout << "Please select a target from the enemy list..." << std::endl;
 		return;
 	}
 
-	Monster& monster = troops[size_t(target) - 1];
+	Monster& monster = troops[static_cast<size_t>(target) - 1];
 	if (!monster.stats.isAlive()) {
 		std::cout << monster.stats.name << " is already dead!" << std::endl;
 		return;
@@ -86,8 +86,6 @@ void chooseAction(Level& level, Hero& hero) {
 	if (!monster.stats.isAlive()) {
 		std::cout << red(monster.stats.name + " has been defeated!") << std::endl;
 	}
-
-	return;
 }
 
 void troopAction(Level& level, Hero& hero) {
@@ -139,13 +137,13 @@ Difficulty selectDifficulty() {
 	std::cout << std::endl;
 }
 
-Hero createHero(Difficulty difficulty) {
+Hero createHero(const Difficulty difficulty) {
 	Hero hero(difficulty);
 	hero.setName();
 	return hero;
 }
 
-void displayHud(Hero& hero) {
+void displayHud(const Hero& hero) {
 	std::cout << green("NAME: " + hero.stats.name)
 		<< green(" | HP: " + std::to_string(hero.stats.health))
 		<< green(" | POTIONS: " + std::to_string(hero.getPotions()))
@@ -161,7 +159,7 @@ void displayLevel(Level& level) {
 		std::string name = troops[i].stats.name;
 		std::cout << i + 1 << " - ";
 		std::cout << red(name);
-		for (int j = name.size(); j < 20; j++) std::cout << " ";
+		for (size_t j = name.size(); j < 20; j++) std::cout << " ";
 		std::cout << "[" << troops[i].stats.health << "]";
 		std::cout << std::endl;
 	}

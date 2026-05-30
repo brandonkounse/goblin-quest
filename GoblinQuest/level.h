@@ -3,10 +3,10 @@
 
 class Level {
 public:
-	Level(Troop troops, int levelNum);
+	Level(const Troop &troops, int levelNum);
 	Troop& getTroops();
 	bool isCleared();
-	int getLevelNum();
+	int getLevelNum() const;
 private:
 	Troop troops;
 	int levelNum;
