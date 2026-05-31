@@ -6,6 +6,11 @@
 #include "level2.h"
 #include "eventloop.h"
 
+// TODO
+// Implement healing opportunity before next level
+// Announce new level upon previous level completion
+// Implement level 3
+
 bool isLevel1Completed;
 bool isLevel2Completed;
 
@@ -105,15 +110,12 @@ void troopAction(Level& level, Hero& hero) {
 		if (m.stats.isAlive()) {
 			addLog(red(m.stats.name + " attacks you for "
 				+ std::to_string(m.stats.attack) + " damage!"));
-			// std::cout << red(m.stats.name + " attacks you for "
-			// 	+ std::to_string(m.stats.attack) + " damage!") << std::endl;
 			hero.takeDamage(m.stats.attack);
 		}
 	}
 
 	if (!hero.stats.isAlive()) {
 		addLog(red("You have been defeated..."));
-		// std::cout << red("You have been defeated...") << std::endl;
 		exit(0);
 	}
 }
@@ -147,7 +149,6 @@ Difficulty selectDifficulty() {
 			std::cout << red("\nPlease select a difficulty or press 'q' to quit...") << std::endl;
 		}
 	}
-	std::cout << std::endl;
 }
 
 Hero createHero(const Difficulty difficulty) {
@@ -158,9 +159,32 @@ Hero createHero(const Difficulty difficulty) {
 
 void displayHud(const Hero& hero) {
 	std::cout << green("NAME: " + hero.stats.name)
-		<< green(" | HP: " + std::to_string(hero.stats.health))
-		<< green(" | POTIONS: " + std::to_string(hero.getPotions()))
-		<< std::endl;
+	   << green(" | HP: ")
+	   << getColoredHealthStr(hero) << green("/" + std::to_string(hero.stats.maxHP))
+	   << green(" | POTIONS: ")
+	   << getColoredPotionsStr(hero) << green("/3")
+	   << std::endl;
+}
+
+std::string getColoredHealthStr(const Hero& hero) {
+	const std::string hpStr = std::to_string(hero.stats.health);
+
+	if (hero.stats.health < hero.stats.maxHP && hero.stats.health > 0) {
+		return orange(hpStr);
+	}
+	return green(hpStr);
+}
+
+std::string getColoredPotionsStr(const Hero& hero) {
+	const std::string potionStr = std::to_string(hero.getPotions());
+
+	if (hero.getPotions() < 3 && hero.getPotions() > 0) {
+		return orange(potionStr);
+	} else if (hero.getPotions() == 0) {
+		return red(potionStr);
+	} else {
+		return green(potionStr);
+	}
 }
 
 void displayLevel(Level& level) {

@@ -1,7 +1,5 @@
 #include <iostream>
 #include <windows.h>
-//#include "hero.h"
-//#include "terminal.h"
 #include "eventloop.h"
 
 static void enableColors() {

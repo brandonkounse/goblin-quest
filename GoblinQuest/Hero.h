@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "stats.h"
 #include "difficulty.h"
 
@@ -16,6 +15,5 @@ public:
     void takeDamage(int attack);
 private:
     int potions;
-    int maxHP;
     static constexpr int potionRestore = 30;
 };

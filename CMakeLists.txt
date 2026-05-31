@@ -18,11 +18,9 @@ add_executable(GoblinQuest
         GoblinQuest/Level1.h
         GoblinQuest/Level2.cpp
         GoblinQuest/Level2.h
-        GoblinQuest/Levels.cpp
         GoblinQuest/Monster.cpp
         GoblinQuest/Monster.h
         GoblinQuest/Stats.h
         GoblinQuest/Terminal.cpp
         GoblinQuest/Terminal.h
-        GoblinQuest/Troop.cpp
         GoblinQuest/Troop.h)

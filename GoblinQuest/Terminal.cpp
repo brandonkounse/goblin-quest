@@ -6,6 +6,7 @@
 const char* const GREEN = "\x1b[32m";
 const char* const RED = "\x1b[31m";
 const char* const BLUE = "\x1b[34m";
+const char* const ORANGE = "\x1b[38;5;208m";
 const char* const RESET = "\x1b[0m";
 
 std::vector<std::string> COMBAT_LOG;
@@ -20,6 +21,10 @@ std::string red(const std::string& text) {
 
 std::string blue(const std::string& text) {
     return BLUE + text + RESET;
+}
+
+std::string orange(const std::string& text) {
+    return ORANGE + text + RESET;
 }
 
 void addLog(const std::string& message) {

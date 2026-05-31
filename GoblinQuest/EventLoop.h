@@ -1,5 +1,4 @@
 #pragma once
-#include "terminal.h"
 #include "hero.h"
 #include "level.h"
 
@@ -14,6 +13,8 @@ TurnResult chooseAction(Level& level, Hero& hero);
 Difficulty selectDifficulty();
 Hero createHero(Difficulty difficulty);
 void displayHud(const Hero& hero);
+std::string getColoredHealthStr(const Hero& hero);
+std::string getColoredPotionsStr(const Hero& hero);
 void displayLevel(Level& level);
 void displayBanner();
 void clearScreen();

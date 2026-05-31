@@ -4,20 +4,20 @@
 
 Hero::Hero(const Difficulty setting) {
     if (setting == EASY) {
-        this->maxHP = 150;
-        stats.health = maxHP;
+        stats.maxHP = 150;
+        stats.health = stats.maxHP;
         stats.attack = 20;
         this->potions = 3;
     }
     else if (setting == NORMAL) {
-        this->maxHP = 100;
-        stats.health = maxHP;
+        stats.maxHP = 100;
+        stats.health = stats.maxHP;
         stats.attack = 15;
         this->potions = 2;
     }
     else {
-        this->maxHP = 70;
-        stats.health = maxHP;
+        stats.maxHP = 70;
+        stats.health = stats.maxHP;
         stats.attack = 10;
         this->potions = 1;
     }
@@ -48,14 +48,14 @@ int Hero::usePotion() {
         return 0;
     }
     if (this->potions > 0) {
-        if (this->stats.health == maxHP) {
+        if (this->stats.health == this->stats.maxHP) {
             std::cout << "Can't heal. Already have full HP" << std::endl;
             return 0;
         }
-        else if (this->stats.health < maxHP && this->stats.health > 0) {
-            if (this->stats.health + potionRestore > maxHP) {
-                const int amountHealed = maxHP - this->stats.health;
-                this->stats.health = maxHP;
+        else if (this->stats.health < this->stats.maxHP && this->stats.health > 0) {
+            if (this->stats.health + potionRestore > this->stats.maxHP) {
+                const int amountHealed = this->stats.maxHP - this->stats.health;
+                this->stats.health = this->stats.maxHP;
                 this->potions -= 1;
                 return amountHealed;
             }
