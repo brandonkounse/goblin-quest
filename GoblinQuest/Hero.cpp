@@ -34,7 +34,7 @@ int Hero::attack() const {
     return stats.attack;
 }
 
-void Hero::takeDamage(int attack) {
+void Hero::takeDamage(const int attack) {
     stats.health -= attack;
 }
 

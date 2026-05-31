@@ -1,6 +1,4 @@
 #include <iostream>
-#include <cstdlib>
-#include <chrono>
 #include <thread>
 #include "terminal.h"
 #include "hero.h"
@@ -22,6 +20,7 @@ void play() {
 				playLevel(level, hero);
 			}
 			isLevel1Completed = true;
+			clearScreen();
 		}
 		else if (!isLevel2Completed) {
 			Level level = createLevel2();
@@ -29,6 +28,7 @@ void play() {
 				playLevel(level, hero);
 			}
 			isLevel2Completed = true;
+			clearScreen();
 		// TODO implement final level 3
 		}
 	}
@@ -39,14 +39,17 @@ void playLevel(Level& level, Hero& hero) {
 	displayBanner();
 	displayHud(hero);
 	displayLevel(level);
-	chooseAction(level, hero);
-	troopAction(level, hero);
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	printLog(COMBAT_LOG);
+	const TurnResult result = chooseAction(level, hero);
+	if (result == TurnResult::ConsumedTurn) {
+		troopAction(level, hero);
+	}
 }
 
-void chooseAction(Level& level, Hero& hero) {
-	Troop& troops = level.getTroops();
-	std::cout << "Select target to attack, 'h' to heal, 'q' to quit: ";
+TurnResult chooseAction(Level& level, Hero& hero) {
+
+
+	std::cout << "\nSelect target to attack, 'h' to heal, 'q' to quit: ";
 
 	std::string action;
 	std::cin >> action;
@@ -54,38 +57,45 @@ void chooseAction(Level& level, Hero& hero) {
 	if (action == "q") {
 		exit(0);
 	}
+
 	if (action == "h") {
-		int amountHealed = hero.usePotion();
+		const int amountHealed = hero.usePotion();
 		if (amountHealed > 0) {
-			std::cout << "Potion restored " + std::to_string(amountHealed) + " hit points!" << std::endl;
+			addLog(blue("Potion restored ") + blue(std::to_string(amountHealed)) + blue(" hit points!"));
+			return TurnResult::ConsumedTurn;
+		} else {
+			addLog(red("Could not use potion."));
+			return TurnResult::Invalid;
 		}
-		return;
 	}
 
 	if (action.size() > 1 || !std::isdigit(action[0])) {
-		std::cout << "Invalid input." << std::endl;
-		return;
+		addLog(red("Invalid input. Please enter a valid number or command."));
+		return TurnResult::Invalid;
 	}
 
 	const int target = std::stoi(action);
 
+	Troop& troops = level.getTroops();
+
 	if (target < 1 || target > static_cast<int>(troops.size())) {
-		std::cout << "Please select a target from the enemy list..." << std::endl;
-		return;
+		addLog(red("Please select a valid target from the enemy list."));
+		return TurnResult::Invalid;
 	}
 
 	Monster& monster = troops[static_cast<size_t>(target) - 1];
 	if (!monster.stats.isAlive()) {
-		std::cout << monster.stats.name << " is already dead!" << std::endl;
-		return;
+		addLog(red(monster.stats.name + " is already dead!"));
+		return TurnResult::Invalid;
 	}
 
-	std::cout << green("Attacking " + monster.stats.name + "for " + std::to_string(hero.stats.attack) + " damage!") << std::endl;
+	addLog(green("Attacking " + monster.stats.name + " for " + std::to_string(hero.stats.attack) + " damage!"));
 	monster.stats.takeDamage(hero.attack());
 
 	if (!monster.stats.isAlive()) {
-		std::cout << red(monster.stats.name + " has been defeated!") << std::endl;
+		addLog(red(monster.stats.name + " has been defeated!"));
 	}
+	return TurnResult::ConsumedTurn;
 }
 
 void troopAction(Level& level, Hero& hero) {
@@ -93,14 +103,17 @@ void troopAction(Level& level, Hero& hero) {
 
 	for (Monster& m : troops) {
 		if (m.stats.isAlive()) {
-			std::cout << red(m.stats.name + " attacks you for "
-				+ std::to_string(m.stats.attack) + " damage!") << std::endl;
+			addLog(red(m.stats.name + " attacks you for "
+				+ std::to_string(m.stats.attack) + " damage!"));
+			// std::cout << red(m.stats.name + " attacks you for "
+			// 	+ std::to_string(m.stats.attack) + " damage!") << std::endl;
 			hero.takeDamage(m.stats.attack);
 		}
 	}
 
 	if (!hero.stats.isAlive()) {
-		std::cout << red("You have been defeated...") << std::endl;
+		addLog(red("You have been defeated..."));
+		// std::cout << red("You have been defeated...") << std::endl;
 		exit(0);
 	}
 }
@@ -154,7 +167,7 @@ void displayLevel(Level& level) {
 	std::cout << "--- Level " << level.getLevelNum() << " ---" << std::endl;
 	std::cout << "Enemies:" << std::endl;
 
-	Troop& troops = level.getTroops();
+	const Troop& troops = level.getTroops();
 	for (int i = 0; i < troops.size(); i++) {
 		std::string name = troops[i].stats.name;
 		std::cout << i + 1 << " - ";
