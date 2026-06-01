@@ -9,8 +9,6 @@
 #include "eventloop.h"
 
 // TODO
-// Implement healing opportunity before next level
-// Announce new level upon previous level completion
 // Implement level 3
 
 bool isLevel1Completed;
