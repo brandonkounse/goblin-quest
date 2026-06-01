@@ -13,6 +13,7 @@ public:
     void setName();
     int attack() const;
     void takeDamage(int attack);
+    void gainPotion();
 private:
     int potions;
     static constexpr int potionRestore = 30;

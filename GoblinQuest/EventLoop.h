@@ -7,7 +7,7 @@ enum class TurnResult {
     ConsumedTurn
 };
 
-void play();
+[[noreturn]] void play();
 void playLevel(Level& level, Hero& hero);
 TurnResult chooseAction(Level& level, Hero& hero);
 Difficulty selectDifficulty();
@@ -19,3 +19,4 @@ void displayLevel(Level& level);
 void displayBanner();
 void clearScreen();
 void troopAction(Level& level, Hero& hero);
+void levelInterlude(Hero& hero);

@@ -68,3 +68,9 @@ int Hero::usePotion() {
     }
     return 0;
 }
+
+void Hero::gainPotion() {
+    if (this->getPotions() < 3) {
+        this->potions++;
+    }
+}

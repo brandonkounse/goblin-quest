@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <iostream>
-#include <thread>
+#include <limits>
+
 #include "terminal.h"
 #include "hero.h"
 #include "level1.h"
@@ -14,7 +16,7 @@
 bool isLevel1Completed;
 bool isLevel2Completed;
 
-void play() {
+[[noreturn]] void play() {
 	displayBanner();
 	const Difficulty difficulty = selectDifficulty();
 	Hero hero = createHero(difficulty);
@@ -26,6 +28,7 @@ void play() {
 			}
 			isLevel1Completed = true;
 			clearScreen();
+			levelInterlude(hero);
 		}
 		else if (!isLevel2Completed) {
 			Level level = createLevel2();
@@ -199,6 +202,56 @@ void displayLevel(Level& level) {
 		for (size_t j = name.size(); j < 20; j++) std::cout << " ";
 		std::cout << "[" << troops[i].stats.health << "]";
 		std::cout << std::endl;
+	}
+}
+
+void levelInterlude(Hero& hero) {
+	displayBanner();
+	displayHud(hero);
+
+	hero.gainPotion();
+	std::cout << "You've looted 1 potion!" << std::endl;
+	std::cout << "Press Enter to continue to the next level";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cin.get();
+
+	clearScreen();
+
+	while (true) {
+		displayBanner();
+		displayHud(hero);
+
+		std::cout << "Would you like to use a potion before the next level? (y/n) ";
+		std::string willUsePotion;
+		std::cin >> willUsePotion;
+
+		std::transform(willUsePotion.begin(), willUsePotion.end(), willUsePotion.begin(), [](const unsigned char c) {
+			return std::tolower(c);
+		});
+
+		if (willUsePotion != "y" && willUsePotion != "n") {
+			clearScreen();
+			std::cout << "Please select either yes(y) or no(n)" << std::endl;
+			continue;
+		}
+
+		if (willUsePotion == "y") {
+			const int amountHealed = hero.usePotion();
+			if (amountHealed > 0) {
+				std::cout << blue("\nPotion restored ") << blue(std::to_string(amountHealed)) << blue(" hit points!\n");
+				std::cout << "Press Enter to march forward...";
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.get();
+				break;
+			} else {
+				clearScreen();
+				std::cout << red("You are already at full health! Save your potions.\n");
+				continue;
+			}
+		}
+		if (willUsePotion == "n") {
+			break;
+		}
 	}
 }
 
