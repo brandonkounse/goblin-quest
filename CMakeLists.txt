@@ -25,4 +25,8 @@ add_executable(GoblinQuest
         GoblinQuest/Terminal.h
         GoblinQuest/Troop.h
         GoblinQuest/Level3.cpp
-        GoblinQuest/Level3.h)
+        GoblinQuest/Level3.h
+        GoblinQuest/ui.h
+        GoblinQuest/ui.cpp
+        GoblinQuest/combat.cpp
+        GoblinQuest/combat.h)
