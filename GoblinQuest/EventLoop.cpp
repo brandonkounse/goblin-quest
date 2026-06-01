@@ -6,13 +6,12 @@
 #include "hero.h"
 #include "level1.h"
 #include "level2.h"
+#include "level3.h"
 #include "eventloop.h"
-
-// TODO
-// Implement level 3
 
 bool isLevel1Completed;
 bool isLevel2Completed;
+bool isLevel3Completed;
 
 [[noreturn]] void play() {
 	displayBanner();
@@ -35,7 +34,15 @@ bool isLevel2Completed;
 			}
 			isLevel2Completed = true;
 			clearScreen();
-		// TODO implement final level 3
+			levelInterlude(hero);
+		}
+		else if (!isLevel3Completed) {
+			Level level = createLevel3();
+			while (!level.isCleared()) {
+				playLevel(level, hero);
+			}
+			isLevel3Completed = true;
+			clearScreen();
 		}
 	}
 }
