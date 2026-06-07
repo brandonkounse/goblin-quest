@@ -29,4 +29,5 @@ add_executable(GoblinQuest
         GoblinQuest/ui.h
         GoblinQuest/ui.cpp
         GoblinQuest/combat.cpp
-        GoblinQuest/combat.h)
+        GoblinQuest/combat.h
+        GoblinQuest/gameconfig.h)

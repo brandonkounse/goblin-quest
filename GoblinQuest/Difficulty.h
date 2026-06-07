@@ -1,6 +1,6 @@
 #pragma once
-enum Difficulty
-{
+
+enum Difficulty {
 	EASY,
 	NORMAL,
 	HARD

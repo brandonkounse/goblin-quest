@@ -9,6 +9,7 @@
 #include "level3.h"
 #include "terminal.h"
 #include "ui.h"
+#include "gameconfig.h"
 
 bool isLevel1Completed;
 bool isLevel2Completed;
@@ -18,11 +19,16 @@ bool isLevel3Completed;
 	displayBanner();
 	const Difficulty difficulty = selectDifficulty();
 	Hero hero = createHero(difficulty);
+
+	const CombatConfig config = createCombatConfig(difficulty);
+	std::random_device rd;
+	std::mt19937 rngEngine(rd());
+
 	while (true) {
 		if (!isLevel1Completed) {
 			Level level = createLevel1();
 			while (!level.isCleared()) {
-				playLevel(level, hero);
+				playLevel(level, hero, config, rngEngine);
 			}
 			isLevel1Completed = true;
 			clearScreen();
@@ -32,7 +38,7 @@ bool isLevel3Completed;
 		else if (!isLevel2Completed) {
 			Level level = createLevel2();
 			while (!level.isCleared()) {
-				playLevel(level, hero);
+				playLevel(level, hero, config, rngEngine);
 			}
 			isLevel2Completed = true;
 			clearScreen();
@@ -42,7 +48,7 @@ bool isLevel3Completed;
 		else if (!isLevel3Completed) {
 			Level level = createLevel3();
 			while (!level.isCleared()) {
-				playLevel(level, hero);
+				playLevel(level, hero, config, rngEngine);
 			}
 			isLevel3Completed = true;
 			clearScreen();
@@ -50,15 +56,16 @@ bool isLevel3Completed;
 	}
 }
 
-void playLevel(Level& level, Hero& hero) {
+void playLevel(Level& level, Hero& hero, const CombatConfig& config, std::mt19937& rngEngine) {
 	clearScreen();
 	displayBanner();
 	displayHud(hero);
 	displayLevel(level);
 	printLog(COMBAT_LOG);
+
 	const TurnResult result = chooseAction(level, hero);
 	if (result == TurnResult::ConsumedTurn) {
-		troopAction(level, hero);
+		troopAction(level, hero, config, rngEngine);
 	}
 }
 

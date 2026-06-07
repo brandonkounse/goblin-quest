@@ -6,6 +6,7 @@
 #include "monster.h"
 #include "terminal.h"
 #include "troop.h"
+#include "combat.h"
 
 TurnResult chooseAction(Level& level, Hero& hero) {
     std::cout << "\nSelect target to attack, 'h' to heal, 'q' to quit: ";
@@ -57,14 +58,18 @@ TurnResult chooseAction(Level& level, Hero& hero) {
     return TurnResult::ConsumedTurn;
 }
 
-void troopAction(Level& level, Hero& hero) {
+void troopAction(Level& level, Hero& hero, const CombatConfig& config, std::mt19937& rngEngine) {
     Troop& troops = level.getTroops();
 
     for (Monster& m : troops) {
         if (m.stats.isAlive()) {
-            addLog(red(m.stats.name + " attacks you for "
+            if (rollForHit(config.monsterHitChance, rngEngine)) {
+                addLog(red(m.stats.name + " attacks you for "
                 + std::to_string(m.stats.attack) + " damage!"));
-            hero.takeDamage(m.stats.attack);
+                hero.takeDamage(m.stats.attack);
+            } else {
+                addLog(red(m.stats.name) + " tries to attack...but misses!");
+            }
         }
     }
 
@@ -72,4 +77,9 @@ void troopAction(Level& level, Hero& hero) {
         addLog(red("You have been defeated..."));
         std::exit(0);
     }
+}
+
+bool rollForHit(const double hitChance, std::mt19937& gen) {
+    std::bernoulli_distribution dist(hitChance);
+    return dist(gen);
 }
