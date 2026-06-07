@@ -26,6 +26,7 @@ bool isLevel3Completed;
 			}
 			isLevel1Completed = true;
 			clearScreen();
+			clearLog(COMBAT_LOG);
 			levelInterlude(hero);
 		}
 		else if (!isLevel2Completed) {
@@ -35,6 +36,7 @@ bool isLevel3Completed;
 			}
 			isLevel2Completed = true;
 			clearScreen();
+			clearLog(COMBAT_LOG);
 			levelInterlude(hero);
 		}
 		else if (!isLevel3Completed) {

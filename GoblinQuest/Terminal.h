@@ -17,3 +17,4 @@ std::string orange(const std::string &text);
 
 void addLog(const std::string& message);
 void printLog(const std::vector<std::string>& messages);
+void clearLog(std::vector<std::string>& messages);

@@ -39,3 +39,7 @@ void printLog(const std::vector<std::string>& messages) {
         std::cout << message << std::endl;
     }
 }
+
+void clearLog(std::vector<std::string>& messages) {
+    messages.clear();
+}
